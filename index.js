@@ -9,7 +9,6 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const { MessageCollector } = require('discord.js');
-const { handleProfileDataCollection, handleProfileDataDisplay } = require('./utils/IdleCap/report'); // Adjust the path based on the new location
 
 
 
@@ -23,24 +22,6 @@ const client = new Client({
         GatewayIntentBits.GuildMessageReactions,
     ]
 });
-
-// Require the listener modules
-//reaction listeners path
-const idleCapReactionListener = require('./utils/IdleCap/ReactionListener');
-// const tacoShackReactionListener = require('./utils/TacoShack/ReactionListener');
-//message listeners path
-const idleCapListeners = require('./utils/IdleCap/Listener');
-// const tacoShackListeners = require('./utils/TacoShack/Listener');
-
-// Use the listener functions
-//reaction listeners
-idleCapReactionListener.handleIdleCapReactionAdd(client);
-// tacoShackReactionListener.handleTacoShackReactionAdd(client);
-//message listeners
-idleCapListeners.handleIdleCapMessageCreate(client);
-idleCapListeners.handleIdleCapMessageUpdate(client);
-// tacoShackListeners.handleTacoShackMessageCreate(client);
-// tacoShackListeners.handleTacoShackMessageUpdate(client);
 
 client.commands = new Collection();
 
@@ -78,8 +59,8 @@ for (const file of eventFiles) {
 
 client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-    handleProfileDataCollection(client);
-    handleProfileDataDisplay(client);
+    // handleProfileDataCollection(client);
+    // handleProfileDataDisplay(client);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
