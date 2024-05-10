@@ -11,7 +11,6 @@ const db = new QuickDB();
 const { MessageCollector } = require('discord.js');
 
 
-
 // Create a new client instance
 const client = new Client({ 
     intents: [
@@ -22,6 +21,18 @@ const client = new Client({
         GatewayIntentBits.GuildMessageReactions,
     ]
 });
+//reaction listeners path
+const idleCapReactionListener = require('./utils/ReactionListener');
+//message listeners path
+const idleCapListeners = require('./utils/Listener');
+
+// Use the listener functions
+//reaction listeners
+idleCapReactionListener.handleIdleCapReactionAdd(client);
+//message listeners
+idleCapListeners.handleIdleCapMessageCreate(client);
+idleCapListeners.handleIdleCapMessageUpdate(client);
+
 
 client.commands = new Collection();
 

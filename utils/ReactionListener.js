@@ -2,8 +2,10 @@ module.exports = {
     handleIdleCapReactionAdd: async function (client) {
         client.on('messageCreate', async message => {
             if (message.author.bot && message.author.id === '512079641981353995') {
-                console.log("Reacting to Idlecapitalist bot message...");
-
+                // console.log("Reacting to Idlecapitalist bot message...");
+                if (message.embeds.length > 0) {
+                    const embed = message.embeds;
+                    console.log(embed)
                 try {
                     await message.react('📋');
                     console.log("Awaiting reactions to Idlecapitalist bot message...");
@@ -21,6 +23,7 @@ module.exports = {
                 } catch (error) {
                     console.error("Failed to collect reactions on Idlecapitalist message:", error);
                 }
+            }
             }
         });
     }
