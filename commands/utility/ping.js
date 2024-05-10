@@ -16,7 +16,7 @@ module.exports = {
             .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true })) // Add this line to set the thumbnail to the user's avatar
             .setTimestamp()
             .setFooter({ 
-                text: 'Sample Footer Text', 
+                text: 'Cryptology for IdleCap Bot', 
                 iconURL: 'https://cdn.discordapp.com/avatars/1220012253101686874/05b6582fc701f6d1a54d100d6d0cb6ba.png' 
             });
 
