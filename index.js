@@ -22,7 +22,7 @@ const client = new Client({
     ]
 });
 //reaction listeners path
-const idleCapReactionListener = require('./utils/ReactionListener');
+const idleCapReactionListener = require('./utils/ReactionListener.js');
 //message listeners path
 const idleCapListeners = require('./utils/Listener');
 
