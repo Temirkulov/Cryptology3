@@ -97,8 +97,22 @@ async function CalcGeneralStats(userId, activeLocation) {
     const UserData = await db.get(`userData.${userId}`);
     const LocationData = UserData.locations[activeLocation];
 
-    // const 
 }
+const initializeUserData = async (userId) => {
+    const defaultUserData = {
+        info: {
+            username: "",
+            userid: userId,
+            corporation: "",
+            prestige: 0,
+            activeLcation: "",
+        },
+        locations: {}
+    };
+    await db.set(`userData.${userId}`, defaultUserData);
+    return defaultUserData;
+};
+
 module.exports = {
     handleIdleCapReactionAdd: async function (client) {
 
@@ -107,7 +121,7 @@ module.exports = {
         client.on('messageCreate', async message => {
             
             if (message.author.bot && message.author.id === '512079641981353995') { 
-                await delay(1500);
+                await delay(2000);
                 if (message.embeds.length > 0) {
                     const embed = message.embeds[0];
                     let username = null;  // Declare member variable in the accessible scope
@@ -117,27 +131,7 @@ module.exports = {
                         const lines = footerText.split('\n');
                         const usernameLine = lines[2]; // Access the third line
                         username = usernameLine.split('|')[0].trim(); // Assuming the username is before the '|'
-                        console.log(`Extracted Username: ${username}`);
-                        // if (lines.length >= 3) {
-                        //     const usernameLine = lines[2]; // Access the third line
-                        //     const username = usernameLine.split('|')[0].trim(); // Assuming the username is before the '|'
-                        //     console.log(`Extracted Username: ${username}`);
-                        //     try {
-                        //         const guild = message.guild; // Get the guild where the message was sent
-                        //         const members = await guild.members.fetch({ query: username, limit: 1 });
-                        //         if (members.size > 0) {
-                        //             member = members.first();  // Assign the found member to the variable
-                        //             console.log(`Found User ID: ${member.id} for Username: ${username}`);
-                        //         } else {
-                        //             console.log(`No member found with Username: ${username}`);
-                        //         }
-                        //     } catch (error) {
-                        //         console.error('Error fetching member:', error);
-                        //     }
-    
-                        // }
-                        // Fetch user ID from guild members
-                    }                                                        
+                    } else return;                                              
 
                     try {
                         await message.react('📋');
@@ -152,6 +146,7 @@ module.exports = {
                                 console.log('User is the same as the one who reacted');
                             } else {
                                 console.log('User is not the same as the one who reacted');
+                                message.channel.send(`React to your own profile buddy ${user.username} <a:oil_papapet:782232194512715776>`);
                             }
                             const embedData = message.embeds[0];
                             const activeLocation = categorizeLocation(embedData.author.name.split('|')[1].trim());
@@ -173,6 +168,57 @@ module.exports = {
                             //     prestigePoints: parseValue(embedData.fields[4].value),
                             //     multiplier: parseFloat(embedData.fields[7].value.replace(/[^\d.]/g, ''))
                             // };
+                            let userData = await db.get(`userData.${user.id}`) || await initializeUserData(user.id);                            ;
+                            console.log(`User Data for ${user.id}:`, userData);
+                            const locationKey = categorizeLocation(embedData.author.name.split('|')[1].trim());
+
+    
+                            embedData.fields.forEach(field => {
+                                switch (field.name) {
+                                    case 'Corporation':
+                                        // Store corporation, not necessarily location-specific
+                                        userData.info.corporation = field.value.replace(/[\u{1F3E0}-\u{1F6FF}]/gu, '').trim();
+                                        break;
+                                    case 'Briefcases':
+                                        // Store briefcases, not necessarily location-specific
+                                        userData.info.briefcases = parseInt(field.value.replace(/[^\d]/g, ''));
+                                        break;
+                                    case 'Coins':
+                                        // Store coins, not necessarily location-specific
+                                        userData.info.coins = parseValue(field.value);
+                                    case 'Balance':
+                                        // Extract balance and assign to specific location
+                                        const balance = parseValue(field.value);
+                                        const activeLocationForBalance = categorizeLocation(embedData.author.name.split('|')[1].trim());
+                                        console.log(`Active Location for Balance: ${activeLocationForBalance}`);
+                                        if (userData.locations[activeLocationForBalance]) {
+                                            userData.locations[activeLocationForBalance].balance = balance;
+                                        } else {
+                                            console.error(`Invalid or undefined location '${activeLocationForBalance}'`);
+                                        }
+                                        break;
+                            
+                                    case 'Income':
+                                        // Handle income in a similar manner
+                                        const income = parseValue(field.value);
+                                        const activeLocationForIncome = categorizeLocation(embedData.author.name.split('|')[1].trim());
+                                        if (userData.locations[activeLocationForIncome]) {
+                                            userData.locations[activeLocationForIncome].info.income = income;
+                                        }
+                                        break;
+                            
+                                    case 'Corporation':
+                                        
+                                    case 'Prestige':
+                                        // Example of handling prestige which is typically not location-specific
+                                        const prestige = parseInt(field.value.replace(/[^\d]/g, ''));
+                                        userData.info.prestige = prestige;
+                                        break;
+                            
+                                    // You can continue to handle other fields similarly
+                                }
+                            });
+                            
                             
                     
                             const reportembed = new EmbedBuilder()
