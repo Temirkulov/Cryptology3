@@ -2,6 +2,7 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, User } = req
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const { defaultProfileData } = require("./ProfileDataStructure");
 
 function userExistsInData(userId) {
     // Implement checking logic here
@@ -98,21 +99,13 @@ async function CalcGeneralStats(userId, activeLocation) {
     const LocationData = UserData.locations[activeLocation];
 
 }
+
 const initializeUserData = async (userId) => {
-    const defaultUserData = {
-        info: {
-            username: "",
-            userid: userId,
-            corporation: "",
-            prestige: 0,
-            activeLcation: "",
-        },
-        locations: {}
-    };
+    const defaultUserData = JSON.parse(JSON.stringify(defaultProfileData));  
+    defaultUserData.info.userid = userId;
     await db.set(`userData.${userId}`, defaultUserData);
     return defaultUserData;
 };
-
 module.exports = {
     handleIdleCapReactionAdd: async function (client) {
 
@@ -127,12 +120,23 @@ module.exports = {
                     let username = null;  // Declare member variable in the accessible scope
                     if (embed.footer && embed.footer.text) {
                         const footerText = embed.footer.text;
-                        // Splitting the footer text into lines and extracting the third line
+                        // Splitting the footer text into lines
                         const lines = footerText.split('\n');
-                        const usernameLine = lines[2]; // Access the third line
-                        username = usernameLine.split('|')[0].trim(); // Assuming the username is before the '|'
-                    } else return;                                              
-
+                    
+                        // Check if there are enough lines before accessing the third line
+                        if (lines.length >= 2) {  // Change this to 2 to match your example array length
+                            const usernameLine = lines[1]; // Access the second line instead of the third
+                            console.log(lines);
+                            console.log(usernameLine);
+                            username = usernameLine.split('|')[0].trim(); // Assuming the username is before the '|'
+                        } else {
+                            console.error('Footer text does not contain enough lines:', footerText);
+                            return;
+                        }
+                    } else {
+                        console.error('No footer text found');
+                        return;
+                    }
                     try {
                         await message.react('📋');
                         console.log("Awaiting reactions to Idlecapitalist bot message...");
@@ -219,7 +223,9 @@ module.exports = {
                                 }
                             });
                             
-                            
+                            await db.set(`userData.${user.id}`, userData);
+                            console.log(`Updated User Data for ${user.id}:`, userData);
+
                     
                             const reportembed = new EmbedBuilder()
                                 .setColor('#FEFFA3') // Yellow
