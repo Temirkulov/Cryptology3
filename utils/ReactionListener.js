@@ -107,6 +107,9 @@ function stringifyEmbedFields(fields) {
 function parseMultiplier(value) {
     return parseFloat(value.replace(/[^0-9.]/g, ''));
 }
+function removeSpecificEmoji(text) {
+    return text.replace(/🏛/g, '').trim();
+}
 
 
 module.exports = {
@@ -227,7 +230,8 @@ module.exports = {
                                 switch (field.name) {
                                     case 'Corporation':
                                         // Store corporation, not necessarily location-specific
-                                        userData.info.corporation = field.value.replace(/[\u{1F3E0}-\u{1F6FF}]/gu, '').trim();
+                                        userData.info.corporation = removeSpecificEmoji(field.value);
+                                        console.log(`Corporation: ${userData.info.corporation}`);
                                         break;
                                     case 'Briefcases':
                                         // Store briefcases, not necessarily location-specific

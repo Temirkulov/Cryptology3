@@ -172,6 +172,20 @@ async function createProfileEmbed(interaction, userId, userData) {
     const giftgive = income * 60 * 2;
     const giftmax = dailyIncome;
     const dailydb = locationData.stats.boosts.dailyIncomeHours || 0;
+    const userCorp = userData.info.corporation;
+    const matchedCorp = await db.get(`corporationData.${userCorp}`) || {
+        name: 'N/A',
+        ceo: 'N/A',
+        managers: [],
+        employees: 0,
+        level: 0,
+        reputation_level: 0,
+        cash: 0,
+        income: 0,
+        multiplier: 0,
+        daily_boost: 0
+    };
+
     return new EmbedBuilder()
         .setColor('#FEFFA3')
         .setTitle('Profile Report')
@@ -198,7 +212,7 @@ async function createProfileEmbed(interaction, userId, userData) {
             { name: ':classical_building: Multiplier Milestones', value: milestoneDescriptions || 'N/A', inline: false },
             { name: ':clipboard: Miscellanous', value: 
             `**Daily:** ${formatNumber(dailydb * income*60)} (without corp)\n` +
-            `**Daily:** ${formatNumber((dailydb + 13)* income*60)} (with corp)\n` +
+            `**Daily:** ${formatNumber((dailydb + matchedCorp.daily_boost)* income*60)} (with corp)\n` +
             `**Max Giftable:** ${formatNumber(giftgive)}\n` +
             `**Max Receivable:** ${formatNumber(giftmax)}\n` +
             `**Full Storage Takes:** ${formatNumber(timetofillstorage)} Hours`, inline: false },
