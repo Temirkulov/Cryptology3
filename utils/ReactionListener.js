@@ -118,6 +118,9 @@ module.exports = {
         // const analysis = require('./Analysis.js');
         // Call the exported functions from each module
         profile.profileHandler(client);
+        const prestige_report = require('./prestige_report.js');
+        prestige_report.prestigeReportHandler(client);    
+
         // analysis.analysisHandler(client);
         // client.on('interactionCreate', async (interaction) => {
         //     if (interaction.isButton() && interaction.customId === 'profile') {
@@ -346,15 +349,15 @@ module.exports = {
                             .addComponents(
                                 new ButtonBuilder()
                                     .setCustomId('profile')
-                                    .setLabel('Profile')
+                                    .setLabel('Profile Report')
                                     .setStyle(ButtonStyle.Primary),
                                 new ButtonBuilder()
                                     .setCustomId('forecast')
-                                    .setLabel('forecast')
+                                    .setLabel('Forecast Report')
                                     .setStyle(ButtonStyle.Primary),
                                 new ButtonBuilder()
-                                    .setCustomId('analysis')
-                                    .setLabel('Analysis')
+                                    .setCustomId('prestige_report')
+                                    .setLabel('Prestige Report')
                                     .setStyle(ButtonStyle.Primary)
                             );
                     

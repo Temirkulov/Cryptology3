@@ -185,7 +185,9 @@ async function createProfileEmbed(interaction, userId, userData) {
         multiplier: 0,
         daily_boost: 0
     };
-
+    // (corporation multi * prestige level) / 2
+    const corpmulti = (parseFloat(matchedCorp.multiplier * prestigeLevel) / 2) > 2000 ? 2000 : (parseFloat(matchedCorp.multiplier * prestigeLevel) / 2);
+    const totalmulti = parseFloat(calcmulti) + parseFloat(corpmulti);
     return new EmbedBuilder()
         .setColor('#FEFFA3')
         .setTitle('Profile Report')
@@ -203,7 +205,8 @@ async function createProfileEmbed(interaction, userId, userData) {
             { name: '📈 Prestige Info', value: 
                 `**Pres. Points/Day:** ${formatNumber(ppd)}\n` +
                 `**Accumulated Pres. Points:** ${formatNumber(ppp)}\n` +
-                `**Potential Multiplier:** ${formatNumber(calcmulti)}x\n` +
+                `**Potential Multiplier:** ${formatNumber(calcmulti)}x (without corp)\n` +
+                `**Potential Multiplier:** ${formatNumber(totalmulti)}x (with corp)\n` +
                 `**Prestige:** ${userData.locations[activeLocation].info.prestige.toString()}`, inline: false },
             { name: ':globe_with_meridians: Location Stats', value: 
                 `**Balance:** ${formatNumber(locationData.info.balance)}\n` +
@@ -221,7 +224,13 @@ async function createProfileEmbed(interaction, userId, userData) {
 }
 
 module.exports = {
+
     profileHandler: function (client) {
+        const forecast = require('./Forecast.js');
+        forecast.forecastHandler(client);    
+        const prestige_report = require('./prestige_report.js');
+        prestige_report.prestigeReportHandler(client);    
+
         client.on('interactionCreate', async (interaction) => {
             if (!interaction.isButton() || interaction.customId !== 'profile') return;
 
@@ -239,11 +248,11 @@ module.exports = {
                 .addComponents(
                     new ButtonBuilder()
                         .setCustomId('forecast')
-                        .setLabel('Forecast Report')
+                        .setLabel('Profile Forecast')
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
-                        .setCustomId('profile')
-                        .setLabel('Profile Report')
+                        .setCustomId('prestige_report')
+                        .setLabel('Prestige Report')
                         .setStyle(ButtonStyle.Primary)
                 );
 

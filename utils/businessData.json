@@ -1,0 +1,569 @@
+{
+    "earth": [
+      {
+        "name": "Pizza Shop",
+        "id": "pizza",
+        "scaling_factor": 1.05,
+        "base_price": 10,
+        "base_income": 1,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Car Wash",
+        "id": "carwash",
+        "scaling_factor": 1.25,
+        "base_price": 20,
+        "base_income": 3,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Restaurant",
+        "id": "restaurant",
+        "scaling_factor": 1.5,
+        "base_price": 50,
+        "base_income": 10,
+        "prestige_unlock": 1
+      },
+        {
+            "name": "Bank",
+            "id": "bank",
+            "scaling_factor": 1.9,
+            "base_price": 150,
+            "base_income": 30,
+            "prestige_unlock": 1
+        },
+        {
+            "name": "Oil Company",
+            "id": "oil",
+            "scaling_factor": 2.5,
+            "base_price": 400,
+            "base_income": 50,
+            "prestige_unlock": 1
+        },
+        {
+            "name": "Airport",
+            "id": "airport",
+            "scaling_factor": 3.2,
+            "base_price": 750,
+            "base_income": 100,
+            "prestige_unlock": 1
+        },
+        {
+            "name": "Hospital",
+            "id": "hospital",
+            "scaling_factor": 4,
+            "base_price": 1250,
+            "base_income": 160,
+            "prestige_unlock": 2
+        },
+        {
+            "name": "Shipyard",
+            "id": "shipyard",
+            "scaling_factor": 6,
+            "base_price": 2000,
+            "base_income": 350,
+            "prestige_unlock": 3
+        },
+        {
+            "name": "Car Factory",
+            "id": "factory",
+            "scaling_factor": 8.5,
+            "base_price": 4000,
+            "base_income": 650,
+            "prestige_unlock": 5
+        },
+        {
+            "name": "Space Center",
+            "id": "space",
+            "scaling_factor": 12,
+            "base_price": 7500,
+            "base_income": 1500,
+            "prestige_unlock": 8
+        },
+        {
+            "name": "University",
+            "id": "university",
+            "scaling_factor": 15,
+            "base_price": 10000,
+            "base_income": 2000,
+            "prestige_unlock": 10
+        },
+        {
+            "name": "Robotics Factory",
+            "id": "robotics",
+            "scaling_factor": 17.1,
+            "base_price": 15000,
+            "base_income": 3000,
+            "prestige_unlock": 12
+        },
+        {
+            "name": "Real State Firm",
+            "id": "firm",
+            "scaling_factor": 21,
+            "base_price": 25000,
+            "base_income": 4500,
+            "prestige_unlock": 14
+        },
+        {
+            "name": "Uranium Mine",
+            "id": "uranium",
+            "scaling_factor": 25,
+            "base_price": 40000,
+            "base_income": 6500,
+            "prestige_unlock": 16
+        },
+        {
+            "name": "Geothermal Power Plant",
+            "id": "plant",
+            "scaling_factor": 30,
+            "base_price": 60000,
+            "base_income": 9000,
+            "prestige_unlock": 18
+        },
+        {
+            "name": "Nuclear Reactor",
+            "id": "reactor",
+            "scaling_factor": 34,
+            "base_price": 85000,
+            "base_income": 11000,
+            "prestige_unlock": 20
+        },
+        {
+            "name": "Software Development Firm",
+            "id": "software",
+            "scaling_factor": 38,
+            "base_price": 110000,
+            "base_income": 13000,
+            "prestige_unlock": 22
+        },
+        {
+            "name": "Telecommunications Industry",
+            "id": "telecom",
+            "scaling_factor": 44,
+            "base_price": 135000,
+            "base_income": 15500,
+            "prestige_unlock": 24
+        },
+        {
+            "name": "Virtual Reality",
+            "id": "vr",
+            "scaling_factor": 50,
+            "base_price": 175000,
+            "base_income": 18000,
+            "prestige_unlock": 26
+        },
+        {
+            "name": "Artificial Intelligence Firm",
+            "id": "ai",
+            "scaling_factor": 55,
+            "base_price": 225000,
+            "base_income": 21000,
+            "prestige_unlock": 28
+        },
+        {
+            "name": "3D Printing Facility",
+            "id": "printing",
+            "scaling_factor": 60,
+            "base_price": 250000,
+            "base_income": 23500,
+            "prestige_unlock": 30
+        },
+        {
+            "name": "Amusement Park",
+            "id": "park",
+            "scaling_factor": 65,
+            "base_price": 280000,
+            "base_income": 27000,
+            "prestige_unlock": 32
+        },
+        {
+            "name": "Island Resort",
+            "id": "resort",
+            "scaling_factor": 70,
+            "base_price": 320000,
+            "base_income": 30000,
+            "prestige_unlock": 34
+        },
+        {
+            "name": "Yacht Club",
+            "id": "yacht",
+            "scaling_factor": 75,
+            "base_price": 370000,
+            "base_income": 33000,
+            "prestige_unlock": 36
+        },
+        {
+            "name": "Arena",
+            "id": "arena",
+            "scaling_factor": 80,
+            "base_price": 420000,
+            "base_income": 36000,
+            "prestige_unlock": 38
+        },
+        {
+            "name": "Record Label",
+            "id": "record",
+            "scaling_factor": 85,
+            "base_price": 470000,
+            "base_income": 40000,
+            "prestige_unlock": 40
+        },
+        {
+            "name": "Circus",
+            "id": "circus",
+            "scaling_factor": 90,
+            "base_price": 520000,
+            "base_income": 43000,
+            "prestige_unlock": 42
+        },
+        {
+            "name": "Crypto Exchange",
+            "id": "crypto",
+            "scaling_factor": 95,
+            "base_price": 570000,
+            "base_income": 46000,
+            "prestige_unlock": 44
+        },
+        {
+            "name": "Hyperloop Transit",
+            "id": "hyperloop",
+            "scaling_factor": 100,
+            "base_price": 620000,
+            "base_income": 50000,
+            "prestige_unlock": 46
+        },
+        {
+            "name": "Organic Farm",
+            "id": "farm",
+            "scaling_factor": 105,
+            "base_price": 670000,
+            "base_income": 53000,
+            "prestige_unlock": 48
+        },
+        {
+            "name": "E-Sports Arena",
+            "id": "esports",
+            "scaling_factor": 110,
+            "base_price": 720000,
+            "base_income": 56000,
+            "prestige_unlock": 50
+        }
+    ],
+    "moon": [
+      {
+        "name": "Satellite",
+        "id": "satellite",
+        "scaling_factor": 1.1,
+        "base_price": 20,
+        "base_income": 1,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Lunar Outpost",
+        "id": "outpost",
+        "scaling_factor": 1.5,
+        "base_price": 50,
+        "base_income": 3,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Solar Field",
+        "id": "solar",
+        "scaling_factor": 3,
+        "base_price": 300,
+        "base_income": 12,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Moon Hotel",
+        "id": "hotel",
+        "scaling_factor": 6,
+        "base_price": 1000,
+        "base_income": 150,
+        "prestige_unlock": 2
+      },
+      {
+        "name": "Interstellar Mall",
+        "id": "mall",
+        "scaling_factor": 9,
+        "base_price": 2500,
+        "base_income": 400,
+        "prestige_unlock": 4
+      },
+      {
+        "name": "Rover Production Plant",
+        "id": "plant",
+        "scaling_factor": 12,
+        "base_price": 6000,
+        "base_income": 850,
+        "prestige_unlock": 6
+      },
+      {
+        "name": "Mining Dome",
+        "id": "dome",
+        "scaling_factor": 15,
+        "base_price": 8500,
+        "base_income": 1100,
+        "prestige_unlock": 8
+      },
+      {
+        "name": "Holographic Projector",
+        "id": "projector",
+        "scaling_factor": 18,
+        "base_price": 12000,
+        "base_income": 1500,
+        "prestige_unlock": 10
+      },
+      {
+        "name": "Antimatter Condenser",
+        "id": "condenser",
+        "scaling_factor": 22,
+        "base_price": 15000,
+        "base_income": 2000,
+        "prestige_unlock": 12
+      },
+      {
+        "name": "Black Hole Emulator",
+        "id": "emulator",
+        "scaling_factor": 26,
+        "base_price": 20000,
+        "base_income": 3500,
+        "prestige_unlock": 14
+      },
+      {
+        "name": "Ion Storage",
+        "id": "ion",
+        "scaling_factor": 32,
+        "base_price": 30000,
+        "base_income": 5000,
+        "prestige_unlock": 16
+        },
+        {
+            "name": "Forcefield Control",
+            "id": "forcefield",
+            "scaling_factor": 38,
+            "base_price": 50000,
+            "base_income": 8000,
+            "prestige_unlock": 18
+        },
+        {
+            "name": "Time Machine",
+            "id": "machine",
+            "scaling_factor": 46,
+            "base_price": 100000,
+            "base_income": 12000,
+            "prestige_unlock": 20
+        },
+        {
+            "name": "Laser Communications",
+            "id": "laser",
+            "scaling_factor": 54,
+            "base_price": 200000,
+            "base_income": 16000,
+            "prestige_unlock": 22
+        },
+        {
+            "name": "Interdimensional Portals",
+            "id": "portal",
+            "scaling_factor": 64,
+            "base_price": 350000,
+            "base_income": 20000,
+            "prestige_unlock": 24
+        },
+        {
+            "name": "Cheese Production",
+            "id": "cheese",
+            "scaling_factor": 75,
+            "base_price": 500000,
+            "base_income": 24000,
+            "prestige_unlock": 26
+        },
+        {
+            "name": "Science Lab",
+            "id": "science",
+            "scaling_factor": 85,
+            "base_price": 750000,
+            "base_income": 27500,
+            "prestige_unlock": 28
+        },
+        {
+            "name": "AI Research Center",
+            "id": "airesearch",
+            "scaling_factor": 95,
+            "base_price": 1000000,
+            "base_income": 30000,
+            "prestige_unlock": 30
+        },
+        {
+            "name": "Galactic Zoo",
+            "id": "zoo",
+            "scaling_factor": 105,
+            "base_price": 1400000,
+            "base_income": 35000,
+            "prestige_unlock": 32
+        },
+        {
+            "name": "Lunar Theme Park",
+            "id": "lunar",
+            "scaling_factor": 115,
+            "base_price": 2000000,
+            "base_income": 40000,
+            "prestige_unlock": 34
+        }
+    ],
+    "mars": [
+      {
+        "name": "Mars Rover",
+        "id": "rover",
+        "scaling_factor": 2,
+        "base_price": 100,
+        "base_income": 1,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Air Control",
+        "id": "air",
+        "scaling_factor": 4,
+        "base_price": 350,
+        "base_income": 10,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Greenhouse",
+        "id": "green",
+        "scaling_factor": 8,
+        "base_price": 1000,
+        "base_income": 100,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Post Office",
+        "id": "post",
+        "scaling_factor": 12,
+        "base_price": 3500,
+        "base_income": 300,
+        "prestige_unlock": 1
+      },
+      {
+        "name": "Mars Motel",
+        "id": "motel",
+        "scaling_factor": 16,
+        "base_price": 7500,
+        "base_income": 800,
+        "prestige_unlock": 2
+      },
+      {
+        "name": "Renewed Agriculture",
+        "id": "agriculture",
+        "scaling_factor": 20,
+        "base_price": 10000,
+        "base_income": 1100,
+        "prestige_unlock": 4
+      },
+      {
+        "name": "Mars Construction",
+        "id": "construction",
+        "scaling_factor": 24,
+        "base_price": 15000,
+        "base_income": 1200,
+        "prestige_unlock": 6
+      },
+      {
+        "name": "Military Camp",
+        "id": "camp",
+        "scaling_factor": 28,
+        "base_price": 20000,
+        "base_income": 2500,
+        "prestige_unlock": 8
+      },
+      {
+        "name": "Control Room",
+        "id": "room",
+        "scaling_factor": 32,
+        "base_price": 30000,
+        "base_income": 5000,
+        "prestige_unlock": 10
+      },
+      {
+        "name": "Solar Panels",
+        "id": "panels",
+        "scaling_factor": 36,
+        "base_price": 50000,
+        "base_income": 7500,
+        "prestige_unlock": 12
+      },
+      {
+        "name": "Red Rock Collector",
+        "id": "collector",
+        "scaling_factor": 40,
+        "base_price": 75000,
+        "base_income": 10000,
+        "prestige_unlock": 14
+        },
+        {
+            "name": "Martian Cargo",
+            "id": "cargo",
+            "scaling_factor": 45,
+            "base_price": 100000,
+            "base_income": 12500,
+            "prestige_unlock": 16
+        },
+        {
+            "name": "UFO",
+            "id": "ufo",
+            "scaling_factor": 50,
+            "base_price": 150000,
+            "base_income": 15000,
+            "prestige_unlock": 18
+        },
+        {
+            "name": "Meteorite Defense System",
+            "id": "defense",
+            "scaling_factor": 60,
+            "base_price": 200000,
+            "base_income": 18000,
+            "prestige_unlock": 20
+        },
+        {
+            "name": "Wormhole Generator",
+            "id": "wormhole",
+            "scaling_factor": 70,
+            "base_price": 300000,
+            "base_income": 21000,
+            "prestige_unlock": 22
+        },
+        {
+            "name": "Iron Compressing",
+            "id": "iron",
+            "scaling_factor": 80,
+            "base_price": 400000,
+            "base_income": 24000,
+            "prestige_unlock": 24
+        },
+        {
+            "name": "Solar Wind Harvester",
+            "id": "harvester",
+            "scaling_factor": 90,
+            "base_price": 500000,
+            "base_income": 26000,
+            "prestige_unlock": 26
+        },
+        {
+            "name": "Black Hole Research Center",
+            "id": "blackhole",
+            "scaling_factor": 100,
+            "base_price": 600000,
+            "base_income": 28000,
+            "prestige_unlock": 28
+        },
+        {
+            "name": "Dark Matter Reactor",
+            "id": "darkmatter",
+            "scaling_factor": 110,
+            "base_price": 700000,
+            "base_income": 30000,
+            "prestige_unlock": 30
+        }
+    ]
+  }
+  
