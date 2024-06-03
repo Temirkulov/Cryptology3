@@ -213,6 +213,11 @@ async function createProfileEmbed(interaction, userId, userData) {
                 `**Income per Day:** ${formatNumber(dailyIncome)}\n` +
                 `**Current Multiplier:** ${formatNumber(locationData.info.multiplier)}x\n`, inline: false },
             { name: ':classical_building: Multiplier Milestones', value: milestoneDescriptions || 'N/A', inline: false },
+            { name: 'Warp Info', value:
+        
+            `**Warp Count:** ${userData.inventory.warps || 0}\n` +
+            `**Briefcase Count:** ${userData.inventory.briefcases || 0}\n` +
+            `**Lootbox Count:** ${userData.inventory.lootboxes || 0}`, inline: false },
             { name: ':clipboard: Miscellanous', value: 
             `**Daily:** ${formatNumber(dailydb * income*60)} (without corp)\n` +
             `**Daily:** ${formatNumber((dailydb + matchedCorp.daily_boost)* income*60)} (with corp)\n` +

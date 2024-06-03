@@ -3,6 +3,7 @@ const { QuickDB } = require("quick.db");
 const fs = require('fs');
 const db = new QuickDB();
 const path = require('path');
+const BigNumber = require('bignumber.js'); // Install BigNumber.js for handling large numbers
 
 // Load business data from JSON file
 const businessData = require('./businessData.json');
@@ -13,15 +14,14 @@ function calculateNthBusinessCost(basePrice, scalingFactor, n) {
         throw new Error("Level must be at least 1.");
     }
     let owned = n - 1;  // Number of businesses owned is one less than the current level
-    return basePrice * Math.pow(scalingFactor, owned);
+    return basePrice * (scalingFactor * owned);
 }
 
 // Function to calculate the total cost for n businesses
 function calculateTotalCostForNBusinesses(basePrice, scalingFactor, n) {
     let totalCost = 0;
     for (let i = 1; i <= n; i++) {
-        let owned = i - 1; // Number of businesses owned is one less than the current level
-        totalCost += basePrice * Math.pow(scalingFactor, owned);
+        totalCost += calculateNthBusinessCost(basePrice, scalingFactor, i);
     }
     return totalCost;
 }
@@ -141,6 +141,18 @@ function checkNewBusinessUnlock(prestigeLevel, location) {
     }
     return 'No';
 }
+function countUnlockedBusinesses(prestigeLevel, location) {
+    const locationBusinesses = businessData[location];
+    let unlockedCount = 0;
+
+    locationBusinesses.forEach(business => {
+        if (prestigeLevel >= business.prestige_unlock) {
+            unlockedCount++;
+        }
+    });
+
+    return unlockedCount;
+}
 
 async function createPrestigeReportEmbed(interaction, userId, userData) {
     const activeLocation = userData.info.activeLocation || 'earth';
@@ -165,6 +177,7 @@ async function createPrestigeReportEmbed(interaction, userId, userData) {
 
     const futureIncome = nextValues.totalIncome * potentialMultiplier;
     const futurePPD = calculatePrestigePoints(futureIncome * 1440, nextPrestigeLevel);
+    const unlockedBusinessesCount = countUnlockedBusinesses(nextPrestigeLevel, activeLocation);
 
     // console.log(`Balance: ${balance}`);
     // console.log(`Income: ${income}`);
@@ -199,7 +212,9 @@ async function createPrestigeReportEmbed(interaction, userId, userData) {
             `**Future Pres.Pts/Day:** ${formatNumber(futurePPD) || 'N/A'}\n` +
             `**Max Business Cap:** ${formatNumber(maxbusinesscap) || 'N/A'}\n` +
             `**Max Income:** $${formatNumber(maxnextValues.totalIncome * potentialMultiplier) || 'N/A'}/min (max BCap)\n`+
-            `**Next Business Unlock:** ${newBusinessUnlock || 'N/A'}\n`
+            `**Next Business Unlock:** ${newBusinessUnlock || 'N/A'}\n` +
+            `**Unlocked Businesses:** ${unlockedBusinessesCount || 'N/A'}\n`+
+            `**Total Business Cost:** $${formatNumber(nextValues.totalCost) || 'N/A'}\n`
             , inline: false },
             { name: 'Prestige Rewards', value: 
             `**Coins:** ${formatNumber(rewards.coins) || 'N/A'}\n` +

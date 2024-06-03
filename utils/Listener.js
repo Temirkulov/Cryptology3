@@ -70,7 +70,7 @@ module.exports = {
                 // Check if there's at least one embed in the updated message
                 if (newMessage.embeds.length > 0) {
                     const updatedEmbed = newMessage.embeds[0];
-                    console.log(`Updated Embed: ${updatedEmbed.title || 'No Title'}`);
+                    // console.log(`Updated Embed: ${updatedEmbed.title || 'No Title'}`);
                     
                     // Check if the embed has the required fields
                     const hasCEO = updatedEmbed.fields.some(field => field.name.includes('CEO'));
@@ -79,6 +79,7 @@ module.exports = {
                     if (hasCEO && hasManagers) {
                         await saveCorporationData(updatedEmbed);
                     }
+                    
 
                     // Log the fields for debugging purposes
                     if (updatedEmbed.fields && updatedEmbed.fields.length > 0) {
