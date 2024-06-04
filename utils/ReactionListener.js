@@ -243,26 +243,7 @@ module.exports = {
 
                             let userData = await db.get(`userData.${user.id}`) || await initializeUserData(user.id);
                             console.log(`User Data for ${user.id}:`, userData);
-                            userData.inventory = {
-                                warps: {
-                                    '30min': 0,
-                                    '1hr': 0,
-                                    '4hr': 0,
-                                    '12hr': 0,
-                                    '24hr': 0
-                                },
-                                briefcases: {
-                                    'briefcase': 0,
-                                    'boostbriefcase': 0,
-                                    'goldenbriefcase': 0
-                                },
-                                lootboxes: {
-                                    'silverbox': 0,
-                                    'goldbox': 0,
-                                    'diamondbox': 0
-                                },
-                                coins: 0
-                            };
+                            
                         
                             embedData.fields.forEach(field => {
                                 switch (field.name) {
@@ -366,63 +347,111 @@ module.exports = {
                                         case 'Corporation':
                                             userData.info.corporation = removeSpecificEmoji(field.value);
                                             break;
-                                            case '🔁 Warps':
-                                                const warps = field.value.split('\n');
-                                                warps.forEach(line => {
-                                                    if (line.includes('30 Minute Warp')) {
-                                                        userData.inventory.warps['30min'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                        case '🔁 Warps':
+                                            // Reset warp values to 0 before populating them with new data
+                                            userData.inventory.warps = {
+                                                '30min': 0,
+                                                '1hr': 0,
+                                                '4hr': 0,
+                                                '12hr': 0,
+                                                '24hr': 0
+                                            };
+                                        
+                                            const warpLines = field.value.split('\n').filter(line => line.trim() !== '' && !line.includes('Total Time'));
+                                            warpLines.forEach(line => {
+                                                const match = line.match(/`([\d,]+)x` ([\d\w\s]+) Warps?/);
+                                                if (match) {
+                                                    const amount = parseInt(match[1].replace(/,/g, ''));
+                                                    const type = match[2].trim();
+                                                    if (type === '30 Minute') {
+                                                        userData.inventory.warps['30min'] = amount;
                                                     } 
-                                                    if (line.includes('1 Hour Warp')) {
-                                                        userData.inventory.warps['1hr'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === '1 Hour') {
+                                                        userData.inventory.warps['1hr'] = amount;
                                                     } 
-                                                    if (line.includes('4 Hour Warp')) {
-                                                        userData.inventory.warps['4hr'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === '4 Hour') {
+                                                        userData.inventory.warps['4hr'] = amount;
                                                     } 
-                                                    if (line.includes('12 Hour Warp')) {
-                                                        userData.inventory.warps['12hr'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === '12 Hour') {
+                                                        userData.inventory.warps['12hr'] = amount;
                                                     }
-                                                     if (line.includes('24 Hour Warp')) {
-                                                        userData.inventory.warps['24hr'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === '24 Hour') {
+                                                        userData.inventory.warps['24hr'] = amount;
                                                     }
-                                                });
-                                                break;
-                                            case '💼 Briefcases':
-                                                const briefcases = field.value.split('\n');
-                                                briefcases.forEach(line => {
-                                                    if (line.includes('Briefcase')) {
-                                                        userData.inventory.briefcases['briefcase'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                } else {
+                                                    console.error(`Failed to parse warp item: ${line}`);
+                                                }
+                                            });
+                                            break;
+                                        
+                                        case '💼 Briefcases':
+                                            // Reset briefcase values to 0 before populating them with new data
+                                            userData.inventory.briefcases = {
+                                                'briefcase': 0,
+                                                'boostbriefcase': 0,
+                                                'goldenbriefcase': 0
+                                            };
+                                        
+                                            const briefcaseLines = field.value.split('\n').filter(line => line.trim() !== '');
+                                            briefcaseLines.forEach(line => {
+                                                const match = line.match(/`([\d,]+)x` ([\w\s]+) Briefcases?/);
+                                                if (match) {
+                                                    const amount = parseInt(match[1].replace(/,/g, ''));
+                                                    const type = match[2].trim();
+                                                    if (type === 'Briefcase') {
+                                                        userData.inventory.briefcases['briefcase'] = amount;
                                                     }  
-                                                    if (line.includes('Boost Briefcase')) {
-                                                        userData.inventory.briefcases['boostbriefcase'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === 'Boost Briefcase') {
+                                                        userData.inventory.briefcases['boostbriefcase'] = amount;
                                                     } 
-                                                     if (line.includes('Golden Briefcase')) {
-                                                        userData.inventory.briefcases['goldenbriefcase'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === 'Golden Briefcase') {
+                                                        userData.inventory.briefcases['goldenbriefcase'] = amount;
                                                     }
-                                                });
-                                                break;
-                                            case '🛒 Loot Boxes':
-                                                const lootboxes = field.value.split('\n');
-                                                lootboxes.forEach(line => {
-                                                    if (line.includes('Silver Loot Box')) {
-                                                        userData.inventory.lootboxes['silverbox'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                } else {
+                                                    console.error(`Failed to parse briefcase item: ${line}`);
+                                                }
+                                            });
+                                            break;
+                                        
+                                        case '🛒 Loot Boxes':
+                                            // Reset lootbox values to 0 before populating them with new data
+                                            userData.inventory.lootboxes = {
+                                                'silverbox': 0,
+                                                'goldbox': 0,
+                                                'diamondbox': 0
+                                            };
+                                        
+                                            const lootboxLines = field.value.split('\n').filter(line => line.trim() !== '');
+                                            lootboxLines.forEach(line => {
+                                                const match = line.match(/`([\d,]+)x` ([\w\s]+) Loot Boxes?/);
+                                                if (match) {
+                                                    const amount = parseInt(match[1].replace(/,/g, ''));
+                                                    const type = match[2].trim();
+                                                    if (type === 'Silver Loot Box') {
+                                                        userData.inventory.lootboxes['silverbox'] = amount;
                                                     } 
-                                                     if (line.includes('Gold Loot Box')) {
-                                                        userData.inventory.lootboxes['goldbox'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === 'Gold Loot Box') {
+                                                        userData.inventory.lootboxes['goldbox'] = amount;
                                                     }
-                                                     if (line.includes('Diamond Loot Box')) {
-                                                        userData.inventory.lootboxes['diamondbox'] += parseInt(line.match(/`(\d+)x/)[1]);
+                                                    if (type === 'Diamond Loot Box') {
+                                                        userData.inventory.lootboxes['diamondbox'] = amount;
                                                     }
-                                                });
-                                                break;
-                                                                            
+                                                } else {
+                                                    console.error(`Failed to parse lootbox item: ${line}`);
+                                                }
+                                            });
+                                            break;
+                                        
                                         case '<:coin:713481704152629290> Coins':
-                                            const coinsMatch = field.value.match(/`(\d+)x` Coins/);
+                                            const coinsMatch = field.value.match(/`([\d,]+)x` Coins/);
                                             if (coinsMatch) {
-                                                userData.info.coins = parseInt(coinsMatch[1], 10);
+                                                userData.info.coins = parseInt(coinsMatch[1].replace(/,/g, ''), 10);
+                                            } else {
+                                                console.error(`Failed to parse coins line: ${field.value}`);
                                             }
                                             break;
-                                    }
-                                });
+                                        }
+                                    });
                                 
                             if (Object.keys(userData).length > 0) {
                                 await db.set(`userData.${user.id}`, userData);

@@ -144,6 +144,48 @@ function calculateWithCaps(upgrades, availablePoints) {
         remainingPoints: points.toFixed(2)
     };
 }
+function calculateTotalWarpTime(warps) {
+    const warpDurations = {
+        '30min': 0.5,
+        '1hr': 1,
+        '4hr': 4,
+        '12hr': 12,
+        '24hr': 24
+    };
+
+    let totalHours = 0;
+    for (const warp in warpDurations) {
+        const quantity = warps[warp] || 0;
+        totalHours += quantity * warpDurations[warp];
+    }
+
+    return totalHours;
+}
+
+function calculateTotalWarpCost(warps, currentIncome) {
+    const totalHours = calculateTotalWarpTime(warps);
+    return totalHours * currentIncome;
+}
+
+function calculateTotalBriefcases(briefcases) {
+    let totalBriefcases = 0;
+    for (const briefcase in briefcases) {
+        totalBriefcases += briefcases[briefcase] || 0;
+    }
+
+    return totalBriefcases;
+}
+
+// Example usage
+function calculateTotalLootboxes(lootboxes) {
+    let totalLootboxes = 0;
+    for (const lootbox in lootboxes) {
+        totalLootboxes += lootboxes[lootbox] || 0;
+    }
+
+    return totalLootboxes;
+}
+
 
 async function createProfileEmbed(interaction, userId, userData) {
     const activeLocation = userData.info.activeLocation || 'earth';
@@ -188,6 +230,11 @@ async function createProfileEmbed(interaction, userId, userData) {
     // (corporation multi * prestige level) / 2
     const corpmulti = (parseFloat(matchedCorp.multiplier * prestigeLevel) / 2) > 2000 ? 2000 : (parseFloat(matchedCorp.multiplier * prestigeLevel) / 2);
     const totalmulti = parseFloat(calcmulti) + parseFloat(corpmulti);
+    const totalWarpTime = calculateTotalWarpTime(userData.inventory.warps);
+    const totalWarpCost = calculateTotalWarpCost(userData.inventory.warps, locationData.info.income);
+    const totalBriefcases = calculateTotalBriefcases(userData.inventory.briefcases);
+    const totalLootboxes = calculateTotalLootboxes(userData.inventory.lootboxes);
+
     return new EmbedBuilder()
         .setColor('#FEFFA3')
         .setTitle('Profile Report')
@@ -198,31 +245,33 @@ async function createProfileEmbed(interaction, userId, userData) {
             iconURL: 'https://media.discordapp.net/attachments/776985762499002408/1245442193938714644/pngegg.png?ex=6658c3ee&is=6657726e&hm=c6d996935f825c04599f751adb887fdaafbcd99bb93b21f3e41270e4a452bf0d&=&format=webp&quality=lossless&width=1036&height=1036'
         })
         .addFields(
-            { name: ':computer: User Data', value: 
+            { name: '<a:nod:1247259462046318703> User Data', value: 
             `**Username:** ${userData.info.username}\n`+
             `**Corporation:** ${userData.info.corporation}\n`+
             `**Active Location:** ${userData.info.activeLocation || 'N/A'}`, inline: false },
-            { name: '📈 Prestige Info', value: 
+            { name: '<a:memeified_LVgold:1247259607873880115> Prestige Info', value: 
                 `**Pres. Points/Day:** ${formatNumber(ppd)}\n` +
                 `**Accumulated Pres. Points:** ${formatNumber(ppp)}\n` +
                 `**Potential Multiplier:** ${formatNumber(calcmulti)}x (without corp)\n` +
                 `**Potential Multiplier:** ${formatNumber(totalmulti)}x (with corp)\n` +
                 `**Prestige:** ${userData.locations[activeLocation].info.prestige.toString()}`, inline: false },
-            { name: ':globe_with_meridians: Location Stats', value: 
+            { name: '<a:memeified_worldwhite:1247258707671257221> Location Stats', value: 
                 `**Balance:** ${formatNumber(locationData.info.balance)}\n` +
                 `**Income per Day:** ${formatNumber(dailyIncome)}\n` +
                 `**Current Multiplier:** ${formatNumber(locationData.info.multiplier)}x\n`, inline: false },
-            { name: ':classical_building: Multiplier Milestones', value: milestoneDescriptions || 'N/A', inline: false },
-            { name: 'Warp Info', value:
-        
-            `**Warp Count:** ${userData.inventory.warps || 0}\n` +
-            `**Briefcase Count:** ${userData.inventory.briefcases || 0}\n` +
-            `**Lootbox Count:** ${userData.inventory.lootboxes || 0}`, inline: false },
-            { name: ':clipboard: Miscellanous', value: 
+            { name: '<a:PepeMedal:1247258912860934285> Multiplier Milestones', value: milestoneDescriptions || 'N/A', inline: false },
+            { name: '<a:yes:1247259394287075339> Inventory Info', value:
+            `**Total Warp Time:** ${totalWarpTime || 0}\n` +
+            `**Warp Money:** ${formatNumber(totalWarpCost || 0)}\n` +
+            `**Total Briefcases:** ${totalBriefcases}\n` +
+            `**Total Lootboxes:** ${totalLootboxes}\n`
+            , inline: false },
+            { name: '<a:hmph:1247263065703977012> Miscellanous', value: 
             `**Daily:** ${formatNumber(dailydb * income*60)} (without corp)\n` +
             `**Daily:** ${formatNumber((dailydb + matchedCorp.daily_boost)* income*60)} (with corp)\n` +
             `**Max Giftable:** ${formatNumber(giftgive)}\n` +
             `**Max Receivable:** ${formatNumber(giftmax)}\n` +
+
             `**Full Storage Takes:** ${formatNumber(timetofillstorage)} Hours`, inline: false },
 
         );

@@ -196,6 +196,7 @@ async function createPrestigeReportEmbed(interaction, userId, userData) {
 
     return new EmbedBuilder()
         .setColor('#FEFFA3')
+        .setThumbnail(interaction.user.displayAvatarURL())
         .setAuthor({ name: `${interaction.user.username} | ${activeLocation} Prestige Report`, iconURL: interaction.user.displayAvatarURL() })
         .setFooter({
             text: 'Developed by kulovich & Majo',

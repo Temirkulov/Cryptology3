@@ -14,10 +14,24 @@ const defaultProfileData = {
         mars: {info:{},stats:{multipliers:{},boosts:{},gifting:{}},businesses:{}},
         rush_colony: {info:{},stats:{multipliers:{},boosts:{},gifting:{}},businesses:{}}
     },
-    inventory:{
-        warps:{},
-        briefcases:{},
-        lootboxes:{},
+    inventory: {
+        warps: {
+            '30min': 0,
+            '1hr': 0,
+            '4hr': 0,
+            '12hr': 0,
+            '24hr': 0
+        },
+        briefcases: {
+            'briefcase': 0,
+            'boostbriefcase': 0,
+            'goldenbriefcase': 0
+        },
+        lootboxes: {
+            'silverbox': 0,
+            'goldbox': 0,
+            'diamondbox': 0
+        }
     },
     boosts:{},
 
