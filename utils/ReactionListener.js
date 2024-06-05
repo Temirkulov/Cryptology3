@@ -217,8 +217,10 @@ module.exports = {
                         console.error('No footer text found');
                         return;
                     }
+                    const authorRegex = /Stats|Your Items|Earth 🌎|Moon 🌗|Mars 🪐|Rush Colony 📅/;
 
-                    try {
+                    if (embed.author && authorRegex.test(embed.author.name)) {
+                        try {
                         await message.react('📋');
                         console.log("Awaiting reactions to Idlecapitalist bot message...");
 
@@ -243,7 +245,9 @@ module.exports = {
 
                             let userData = await db.get(`userData.${user.id}`) || await initializeUserData(user.id);
                             console.log(`User Data for ${user.id}:`, userData);
-                            
+                            userData.info.username = user.username;
+                            userData.info.id = user.id;
+                            userData.info.activeLocation = activeLocation;
                         
                             embedData.fields.forEach(field => {
                                 switch (field.name) {
@@ -398,13 +402,13 @@ module.exports = {
                                                 if (match) {
                                                     const amount = parseInt(match[1].replace(/,/g, ''));
                                                     const type = match[2].trim();
-                                                    if (type === 'Briefcase') {
+                                                    if (type === 'Briefcases') {
                                                         userData.inventory.briefcases['briefcase'] = amount;
                                                     }  
-                                                    if (type === 'Boost Briefcase') {
+                                                    if (type === 'Boost Briefcases') {
                                                         userData.inventory.briefcases['boostbriefcase'] = amount;
                                                     } 
-                                                    if (type === 'Golden Briefcase') {
+                                                    if (type === 'Golden Briefcases') {
                                                         userData.inventory.briefcases['goldenbriefcase'] = amount;
                                                     }
                                                 } else {
@@ -491,6 +495,7 @@ module.exports = {
                         console.error("Failed to collect reactions on Idlecapitalist message:", error);
                     }
                 }
+                } else return;
             }
         });
     }
